@@ -1,6 +1,5 @@
 package tech.zinals.rsmc_test;
 
-import com.mod.rsmc.container.ContainerLibrary;
 import com.mod.rsmc.data.RSMCData;
 import com.mod.rsmc.data.RSMCDataFunctionsKt;
 import com.mojang.logging.LogUtils;
@@ -10,8 +9,10 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.apache.http.annotation.Obsolete;
 import org.slf4j.Logger;
 
+@Obsolete
 public class ArmorGui extends Gui {
 
     private static final Logger LOGGER = LogUtils.getLogger();

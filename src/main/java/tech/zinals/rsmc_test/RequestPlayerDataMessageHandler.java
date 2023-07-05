@@ -14,7 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tech.zinals.rsmc_test.gui.widgets.ArmorOverlay;
+import tech.zinals.rsmc_test.gui.ArmorOverlay;
 
 /**
  * Packet handler for the RequestPlayerDataMessage packet.

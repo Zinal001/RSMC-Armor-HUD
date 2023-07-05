@@ -2,7 +2,6 @@ package tech.zinals.rsmc_test;
 
 import com.mod.rsmc.data.RSMCData;
 import com.mod.rsmc.data.RSMCDataFunctionsKt;
-import com.mod.rsmc.packets.RSMCPacketHandler;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;

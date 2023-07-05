@@ -1,4 +1,4 @@
-package tech.zinals.rsmc_test.gui.widgets;
+package tech.zinals.rsmc_test.gui;
 
 import com.mod.rsmc.data.RSMCData;
 import com.mod.rsmc.data.RSMCDataFunctionsKt;
@@ -8,10 +8,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.IIngameOverlay;
-import net.minecraftforge.client.gui.OverlayRegistry;
 import tech.zinals.rsmc_test.RequestPlayerDataMessage;
 
 import java.util.Date;
