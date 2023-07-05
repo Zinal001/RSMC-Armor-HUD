@@ -1,5 +1,6 @@
 package tech.zinals.rsmc_armor_hud.gui.widgets;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.item.ItemStack;
 import tech.zinals.rsmc_armor_hud.ModConfig;

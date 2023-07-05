@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import tech.zinals.rsmc_armor_hud.ModConfig;
+import tech.zinals.rsmc_armor_hud.gui.GUIUtils;
+import tech.zinals.rsmc_armor_hud.gui.RSMCEquipmentSlot;
 import tech.zinals.rsmc_armor_hud.gui.RenderData;
 
 import java.util.ArrayList;
@@ -29,22 +31,41 @@ public class ListStyleArmorWidget implements IArmorRenderWidget
         int window_height = renderData.MinecraftInstance.getWindow().getGuiScaledHeight();
 
         ArrayList<ItemStack> visibleSlots = new ArrayList<>();
-        addIfVisible(renderData.MinecraftInstance.player.getItemBySlot(EquipmentSlot.HEAD), visibleSlots);
-        addIfVisible(renderData.MinecraftInstance.player.getItemBySlot(EquipmentSlot.CHEST), visibleSlots);
-        addIfVisible(renderData.MinecraftInstance.player.getItemBySlot(EquipmentSlot.LEGS), visibleSlots);
-        addIfVisible(renderData.MinecraftInstance.player.getItemBySlot(EquipmentSlot.FEET), visibleSlots);
-        addIfVisible(renderData.MinecraftInstance.player.getItemBySlot(EquipmentSlot.MAINHAND), visibleSlots);
-        addIfVisible(renderData.MinecraftInstance.player.getItemBySlot(EquipmentSlot.OFFHAND), visibleSlots);
-        addIfVisible(renderData.Data.getEquipment().getInventory().getCape(), visibleSlots);
-        addIfVisible(renderData.Data.getEquipment().getInventory().getAmmo(), visibleSlots);
-        addIfVisible(renderData.Data.getEquipment().getInventory().getHand(), visibleSlots);
-        addIfVisible(renderData.Data.getEquipment().getInventory().getNeck(), visibleSlots);
-        addIfVisible(renderData.Data.getEquipment().getInventory().getGloves(), visibleSlots);
+
+        addIfVisible(EquipmentSlot.HEAD, renderData, visibleSlots);
+        addIfVisible(EquipmentSlot.CHEST, renderData, visibleSlots);
+        addIfVisible(EquipmentSlot.LEGS, renderData, visibleSlots);
+        addIfVisible(EquipmentSlot.FEET, renderData, visibleSlots);
+        addIfVisible(EquipmentSlot.MAINHAND, renderData, visibleSlots);
+        addIfVisible(EquipmentSlot.OFFHAND, renderData, visibleSlots);
+
+        addIfVisible(RSMCEquipmentSlot.CAPE, renderData, visibleSlots);
+        addIfVisible(RSMCEquipmentSlot.AMMO, renderData, visibleSlots);
+        addIfVisible(RSMCEquipmentSlot.HAND, renderData, visibleSlots);
+        addIfVisible(RSMCEquipmentSlot.NECK, renderData, visibleSlots);
+        addIfVisible(RSMCEquipmentSlot.GLOVES, renderData, visibleSlots);
 
         int xOffset = GetXOffset(renderData);
 
-        int x = window_width - xOffset;
-        int y = (window_height - (20 * visibleSlots.size())) / 2;
+        int x = 0;
+        int y = 0;
+
+        ModConfig.GuiHAlign xAlign = ModConfig.guiHAlign.get();
+
+        switch (xAlign) {
+            case Center -> x = (window_width - xOffset) / 2;
+            case Right -> x = window_width - xOffset;
+        }
+
+        ModConfig.GuiVAlign yAlign = ModConfig.guiVAlign.get();
+
+        switch(yAlign) {
+            case Middle -> y = (window_height - (20 * visibleSlots.size())) / 2;
+            case Bottom -> y = window_height - (20 * visibleSlots.size());
+        }
+
+        x += ModConfig.guiXOffset.get();
+        y += ModConfig.guiYOffset.get();
 
         int[] position = new int[] { x, y };
 
@@ -54,10 +75,30 @@ public class ListStyleArmorWidget implements IArmorRenderWidget
         }
     }
 
-    private void addIfVisible(ItemStack itemStack, ArrayList<ItemStack> list)
+    private void addIfVisible(EquipmentSlot slot, RenderData renderData, ArrayList<ItemStack> list)
     {
-        if(!itemStack.isEmpty())
-            list.add(itemStack);
+        if(!GUIUtils.INSTANCE.IsGuiSlotEnabled(slot))
+            return;
+
+        ItemStack stack = renderData.GetStackFromSlot(slot);
+
+        if(stack.isEmpty())
+            return;
+
+        list.add(stack);
+    }
+
+    private void addIfVisible(RSMCEquipmentSlot slot, RenderData renderData, ArrayList<ItemStack> list)
+    {
+        if(!GUIUtils.INSTANCE.IsGuiSlotEnabled(slot))
+            return;
+
+        ItemStack stack = renderData.GetStackFromSlot(slot);
+
+        if(stack.isEmpty())
+            return;
+
+        list.add(stack);
     }
 
     protected void renderSlot(ItemStack stack, PoseStack poseStack, int[] position, RenderData renderData)
