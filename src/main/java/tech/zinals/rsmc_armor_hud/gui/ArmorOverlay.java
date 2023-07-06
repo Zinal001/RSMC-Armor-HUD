@@ -2,6 +2,7 @@ package tech.zinals.rsmc_armor_hud.gui;
 
 import com.mod.rsmc.data.RSMCData;
 import com.mod.rsmc.data.RSMCDataFunctionsKt;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -32,19 +33,9 @@ public class ArmorOverlay implements IIngameOverlay {
 
     private IArmorRenderWidget ArmorRenderWidget = null;
 
-    private ItemRenderer itemRenderer;
-    private Font fontRenderer;
-
-    private RSMCData playerData;
-
     public ArmorOverlay()
     {
 
-    }
-
-    public void SetData(RSMCData data)
-    {
-        playerData = data;
     }
 
     @Override
@@ -52,19 +43,10 @@ public class ArmorOverlay implements IIngameOverlay {
     {
         Minecraft instance = Minecraft.getInstance();
 
-        itemRenderer = instance.getItemRenderer();
-        fontRenderer = instance.font;
-
-        if(itemRenderer == null || fontRenderer == null || instance.player == null)
+        if(instance.getItemRenderer() == null || instance.font == null || instance.player == null)
             return;
 
-        RSMCData data;
-
-        if(playerData != null)
-            data = playerData;
-        else
-            data = RSMCDataFunctionsKt.getRsmc((LivingEntity) instance.player);
-
+        RSMCData data = RSMCDataFunctionsKt.getRsmc(instance.player);
 
         RenderData renderData = new RenderData(instance, data);
 
@@ -73,5 +55,7 @@ public class ArmorOverlay implements IIngameOverlay {
 
         poseStack.clear();
         ArmorRenderWidget.Render(poseStack, renderData);
+        poseStack.clear();
+        RenderSystem.getModelViewStack().clear();
     }
 }

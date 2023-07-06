@@ -1,6 +1,5 @@
 package tech.zinals.rsmc_armor_hud.gui.widgets;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.item.ItemStack;
 import tech.zinals.rsmc_armor_hud.ModConfig;
@@ -26,6 +25,6 @@ public class SlimListStyleArmorWidget extends ListStyleArmorWidget{
         renderData.ItemRenderer.renderGuiItem(stack, position[0], position[1]);
         renderData.ItemRenderer.renderGuiItemDecorations(renderData.FontRenderer, stack, position[0], position[1], null);
 
-        position[1] += 20;
+        position[1] += this.GetYOffset(renderData);
     }
 }

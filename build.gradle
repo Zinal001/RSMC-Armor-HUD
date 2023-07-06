@@ -175,11 +175,11 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "RSMC Armor HUS",
+                "Specification-Title"     : "RSMC Armor HUD",
                 "Specification-Vendor"    : "Zinal",
-                "Specification-Version"   : "0.0.1", // We are version 1 of ourselves
+                "Specification-Version"   : "0.0.2", // We are version 1 of ourselves
                 "Implementation-Title"    : "RSMC Armor HUD",
-                "Implementation-Version"  : "0.0.1",
+                "Implementation-Version"  : "0.0.2",
                 "Implementation-Vendor"   : "Zinal",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])

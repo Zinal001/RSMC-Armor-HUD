@@ -22,9 +22,16 @@ public class ListStyleArmorWidget implements IArmorRenderWidget
         return renderData.FontRenderer.width("100%") + 30;
     }
 
+    protected int GetYOffset(RenderData renderData)
+    {
+        return 20;
+    }
+
     @Override
     public void Render(PoseStack poseStack, RenderData renderData)
     {
+        float scale = ModConfig.guiScale.get() / 100F;
+
         //Slots: Helmet, Armor, Legs, Boots, Main-Hand, Off-Hand, Mantle, Neckless, Ammo, Hand, Gloves
 
         int window_width = renderData.MinecraftInstance.getWindow().getGuiScaledWidth();
@@ -45,10 +52,13 @@ public class ListStyleArmorWidget implements IArmorRenderWidget
         addIfVisible(RSMCEquipmentSlot.NECK, renderData, visibleSlots);
         addIfVisible(RSMCEquipmentSlot.GLOVES, renderData, visibleSlots);
 
-        int xOffset = GetXOffset(renderData);
+        int xOffset = Math.round(GetXOffset(renderData) * scale);
+        int yOffset = Math.round(GetYOffset(renderData) * scale);
 
         int x = 0;
         int y = 0;
+
+        int containerHeight = yOffset * visibleSlots.size();
 
         ModConfig.GuiHAlign xAlign = ModConfig.guiHAlign.get();
 
@@ -60,19 +70,20 @@ public class ListStyleArmorWidget implements IArmorRenderWidget
         ModConfig.GuiVAlign yAlign = ModConfig.guiVAlign.get();
 
         switch(yAlign) {
-            case Middle -> y = (window_height - (20 * visibleSlots.size())) / 2;
-            case Bottom -> y = window_height - (20 * visibleSlots.size());
+            case Middle -> y = (window_height - containerHeight) / 2;
+            case Bottom -> y = window_height - containerHeight;
         }
 
         x += ModConfig.guiXOffset.get();
         y += ModConfig.guiYOffset.get();
 
-        int[] position = new int[] { x, y };
-
-        for (ItemStack stack : visibleSlots)
-        {
-            renderSlot(stack, poseStack, position, renderData);
-        }
+        GUIUtils.ScaleContext.Run(x, y, scale, () -> {
+            int[] position = new int[] { 0, 0 };
+            for (ItemStack stack : visibleSlots)
+            {
+                renderSlot(stack, poseStack, position, renderData);
+            }
+        });
     }
 
     private void addIfVisible(EquipmentSlot slot, RenderData renderData, ArrayList<ItemStack> list)
@@ -114,6 +125,6 @@ public class ListStyleArmorWidget implements IArmorRenderWidget
         renderData.ItemRenderer.renderGuiItem(stack, position[0], position[1]);
         renderData.FontRenderer.draw(poseStack, durabilityText, position[0] + 20, position[1] + 4, 16777215);
 
-        position[1] += 20;
+        position[1] += GetYOffset(renderData);
     }
 }

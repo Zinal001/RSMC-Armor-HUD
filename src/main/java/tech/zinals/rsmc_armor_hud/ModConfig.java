@@ -18,6 +18,8 @@ public class ModConfig {
     public static ForgeConfigSpec.DoubleValue guiXOffset;
     public static ForgeConfigSpec.DoubleValue guiYOffset;
 
+    public static ForgeConfigSpec.IntValue guiScale;
+
     public static HashMap<String, ForgeConfigSpec.BooleanValue> slotVisibility = new HashMap<>();
 
     static {
@@ -38,6 +40,8 @@ public class ModConfig {
 
         guiXOffset = builder.comment("The horizontal offset").defineInRange("gui.hoffset", 0.0, -9999.0, 9999.0);
         guiYOffset = builder.comment("The vertical offset").defineInRange("gui.voffset", 0.0, -9999.0, 9999.0);
+
+        guiScale = builder.comment("The scale of the UI in percent").defineInRange("gui.scale", 100, 1, 500);
 
         builder.pop();
 
