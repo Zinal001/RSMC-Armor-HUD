@@ -67,7 +67,7 @@ public class RSMCStyleArmorWidget implements IArmorRenderWidget {
             renderSlot(EquipmentSlot.OFFHAND, poseStack, position, renderData, 2, 2);
             renderSlot(EquipmentSlot.LEGS, poseStack, position, renderData, 1, 3);
             renderSlot(EquipmentSlot.MAINHAND, poseStack, position, renderData, 0, 4);
-            renderSlot(EquipmentSlot.OFFHAND, poseStack, position, renderData, 1, 4);
+            renderSlot(EquipmentSlot.FEET, poseStack, position, renderData, 1, 4);
             renderSlot(RSMCEquipmentSlot.GLOVES, poseStack, position, renderData, 2, 4);
         });
     }
@@ -97,6 +97,7 @@ public class RSMCStyleArmorWidget implements IArmorRenderWidget {
         int x = position[0] + (slotX * getSlotWidth());
         int y = position[1] + (slotY * getSlotHeight());
 
+        GUIUtils.INSTANCE.DrawSlotBg(x, y, renderData, poseStack);
         renderData.ItemRenderer.renderGuiItem(stack, x, y);
         renderData.ItemRenderer.renderGuiItemDecorations(renderData.FontRenderer, stack, x, y, null);
     }

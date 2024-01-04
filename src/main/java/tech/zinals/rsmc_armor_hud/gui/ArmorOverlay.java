@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.IIngameOverlay;
@@ -24,6 +25,9 @@ import java.util.HashMap;
 public class ArmorOverlay implements IIngameOverlay {
 
     public static final ArmorOverlay INSTANCE = new ArmorOverlay();
+    public static final ResourceLocation WHITE_BG_TEXTURE = new ResourceLocation("minecraft", "textures/misc/white.png");
+
+    private static boolean _WhiteBgBound = false;
 
     private static final HashMap<ModConfig.ArmorRender, IArmorRenderWidget> ArmorRenderers = new HashMap<>() {{
         put(ModConfig.ArmorRender.List, new ListStyleArmorWidget());
@@ -45,6 +49,12 @@ public class ArmorOverlay implements IIngameOverlay {
 
         if(instance.getItemRenderer() == null || instance.font == null || instance.player == null)
             return;
+
+        if(!_WhiteBgBound)
+        {
+            instance.getTextureManager().bindForSetup(WHITE_BG_TEXTURE);
+            _WhiteBgBound = true;
+        }
 
         RSMCData data = RSMCDataFunctionsKt.getRsmc(instance.player);
 

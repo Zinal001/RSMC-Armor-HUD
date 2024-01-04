@@ -19,6 +19,10 @@ public class ModConfig {
     public static ForgeConfigSpec.DoubleValue guiYOffset;
 
     public static ForgeConfigSpec.IntValue guiScale;
+    public static ForgeConfigSpec.IntValue bgOpacity;
+    public static ForgeConfigSpec.IntValue bgR;
+    public static ForgeConfigSpec.IntValue bgG;
+    public static ForgeConfigSpec.IntValue bgB;
 
     public static HashMap<String, ForgeConfigSpec.BooleanValue> slotVisibility = new HashMap<>();
 
@@ -43,6 +47,7 @@ public class ModConfig {
 
         guiScale = builder.comment("The scale of the UI in percent").defineInRange("gui.scale", 100, 1, 500);
 
+
         builder.pop();
 
         builder.comment("Change visibility of certain armor slots").push("slots");
@@ -52,6 +57,15 @@ public class ModConfig {
 
         for(RSMCEquipmentSlot slot : RSMCEquipmentSlot.values())
             setupSlotVisibility(slot, builder);
+
+        builder.pop();
+
+        builder.comment("Background settings").push("background");
+
+        bgOpacity = builder.comment("The background opacity of the UI in percent").defineInRange("opacity", 0, 0, 100);
+        bgR = builder.comment("The red component of the background color in percent").defineInRange("red", 100, 0, 100);
+        bgG = builder.comment("The green component of the background color in percent").defineInRange("green", 100, 0, 100);
+        bgB = builder.comment("The blue component of the background color in percent").defineInRange("blue", 100, 0, 100);
 
         builder.pop();
     }

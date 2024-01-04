@@ -3,6 +3,7 @@ package tech.zinals.rsmc_armor_hud.gui.widgets;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.gui.GuiUtils;
 import tech.zinals.rsmc_armor_hud.ModConfig;
 import tech.zinals.rsmc_armor_hud.gui.GUIUtils;
 import tech.zinals.rsmc_armor_hud.gui.RSMCEquipmentSlot;
@@ -122,6 +123,8 @@ public class ListStyleArmorWidget implements IArmorRenderWidget
 
         String durabilityText = durability + "%";
 
+
+        GUIUtils.INSTANCE.DrawSlotBg(position[0], position[1], renderData, poseStack);
         renderData.ItemRenderer.renderGuiItem(stack, position[0], position[1]);
         renderData.FontRenderer.draw(poseStack, durabilityText, position[0] + 20, position[1] + 4, 16777215);
 
